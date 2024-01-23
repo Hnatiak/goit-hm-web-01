@@ -765,7 +765,7 @@ if __name__ == '__main__':
 #                 cprint("Good bye!", 'blue')
 #                 break
 #             elif command == "help":
-#                 interface.show_help = True  # Set show_help to True when "help" command is entered
+#                 interface.show_help = True
 #                 interface.show()
 #             else:
 #                 handler = OPERATIONS.get(command, lambda x: "I don't know such a command")
