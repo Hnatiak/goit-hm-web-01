@@ -16,17 +16,17 @@ class AddressBook(UserDict):
         contact_to_delete = self.data.get(contact_name)
         if contact_to_delete:
             del self.data[contact_name]
-            return cprint('Contact deleted successfully', 'green')
+            return 'Contact deleted successfully'
         else:
-            return cprint('Contact not found', 'red')
+            return 'Contact not found'
 
     def update_contact(self, name):
         if name in self.data:
             record = self.data[name]
             record.edit_record()
-            return cprint('Contact updated successfully', 'green')
+            return 'Contact updated successfully'
         else:
-            return cprint('Contact not found', 'red')
+            return 'Contact not found'
 
     def write_data(self):
         with open(path_to_db, 'wb') as file:
@@ -60,8 +60,3 @@ class AddressBook(UserDict):
 
     def __next__(self):
         raise StopIteration
-    
-    
-    
-path_to_db = 'db.bin'
-address_book = AddressBook()

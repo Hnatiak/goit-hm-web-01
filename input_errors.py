@@ -1,22 +1,28 @@
 from record import Record, Name, Phone, Birthday
-from address_book import address_book
+from address_book import AddressBook
 from termcolor import cprint
+
+STOP_WORDS = ["good bye", "close", "exit"]
+address_book = AddressBook()
 
 def input_error(func):
     def inner(*args):
         try:
             return func(*args)
         except KeyError:
-            return cprint("Contact not found", 'red')
+            return "Contact not found"
         except ValueError as e:
             return str(e)
         except IndexError:
-            return cprint("Insufficient arguments", 'red')
+            return "Insufficient arguments"
         except KeyboardInterrupt:
             return print(' ')
 
     return inner
 
+
+def hello(*args):
+    return "How can I help you?"
 
 @input_error
 def add(*args):
@@ -30,10 +36,10 @@ def add(*args):
             record.add_phone(Phone(item))
             
     if name in address_book.data:
-        return cprint('Contact with the same name already exists', 'red')
+        return 'Contact with the same name already exists'
     
     address_book.add_record(record)
-    return cprint('Contact added successfully', 'green')
+    return 'Contact added successfully'
 
 @input_error
 def change(*args):
@@ -42,9 +48,9 @@ def change(*args):
         record = address_book.data[name]
         for i, phone in enumerate(phones):
             record.edit_phone(record.phones[i], Phone(phone))
-        return cprint('Contact updated successfully', 'green')
+        return 'Contact updated successfully'
     else:
-        return cprint('Contact not found', 'red')
+        return 'Contact not found'
 
 
 @input_error
@@ -55,9 +61,9 @@ def phone(*args):
         if record.phones:
             return ", ".join([phone.value for phone in record.phones])
         else:
-            return cprint('No phone number found for this contact', 'red')
+            return 'No phone number found for this contact'
     else:
-        return cprint('Contact not found', 'red')
+        return 'Contact not found'
 
 
 @input_error
@@ -71,7 +77,7 @@ def show_all(*args):
                 batch = next(iterator)
                 for record in batch:
                     phones = [phone.value for phone in record.phones]
-                    result = cprint(f'{record.name.value.title()}, days to birthday = {record.days_to_birthday()}: {", ".join(phones)}', 'yellow')
+                    result = f'{record.name.value.title()}, days to birthday = {record.days_to_birthday()}: {", ".join(phones)}'
                     print(result)
                 print("---")
 
@@ -81,7 +87,7 @@ def show_all(*args):
         except StopIteration:
             pass
     else:
-        return cprint('No contacts found', 'red')
+        return 'No contacts found'
 
 
 def close(word):
@@ -90,7 +96,7 @@ def close(word):
 
 def find(word):
     lfind = address_book.find(word[1])
-    return lfind if lfind else cprint('nothing found', 'red')
+    return lfind if lfind else 'nothing found'
 
 
 @input_error

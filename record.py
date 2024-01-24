@@ -1,9 +1,5 @@
-# from datetime import datetime
-# from termcolor import cprint
-# # from address_book import Name, Birthday
-
 from termcolor import cprint
-# from address_book import address_book
+from datetime import datetime
 
 class Record:
     def __init__(self, name, birthday=None):
